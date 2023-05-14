@@ -119,7 +119,7 @@ class BlackBoxTest2Template {
 
 
 	@Test
-	void yellow_5_m1_true() {
+	void yellow_5_minus1_true() {
 		/* Colors: YELLOW, GREEN, RED */
 		Color expected = Color.YELLOW;
 		int x = 5;

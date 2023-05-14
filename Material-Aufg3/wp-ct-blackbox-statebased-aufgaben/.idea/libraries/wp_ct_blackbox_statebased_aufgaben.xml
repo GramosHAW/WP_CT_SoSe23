@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="wp-ct-blackbox-statebased-aufgaben">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Statebased1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Statebased2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
