@@ -11,13 +11,23 @@ public class BedingungsBerechner {
     Set<List<String>> ergebnisSet = new HashSet<>();
 
     public static void main(String[] args) throws FileNotFoundException {
+
+        List<String> alleExercizes = new ArrayList<>();
+        alleExercizes.add("C:\\Users\\G\\Desktop\\CT\\Praktikumsaufgaben\\Material-Aufg4\\exercises\\ex1.md");
+        alleExercizes.add("C:\\Users\\G\\Desktop\\CT\\Praktikumsaufgaben\\Material-Aufg4\\exercises\\ex2.md");
+        alleExercizes.add("C:\\Users\\G\\Desktop\\CT\\Praktikumsaufgaben\\Material-Aufg4\\exercises\\ex3.md");
+        alleExercizes.add("C:\\Users\\G\\Desktop\\CT\\Praktikumsaufgaben\\Material-Aufg4\\exercises\\ex4.md");
+        alleExercizes.add("C:\\Users\\G\\Desktop\\CT\\Praktikumsaufgaben\\Material-Aufg4\\exercises\\ex5.md");
+        alleExercizes.add("C:\\Users\\G\\Desktop\\CT\\Praktikumsaufgaben\\Material-Aufg4\\exercises\\ex6.md");
+        alleExercizes.add("C:\\Users\\G\\Desktop\\CT\\Praktikumsaufgaben\\Material-Aufg4\\exercises\\ex7.md");
+
         BedingungsBerechner bedingungsBerechner = new BedingungsBerechner();
         String exercize = "C:\\Users\\G\\Desktop\\CT\\Praktikumsaufgaben\\Material-Aufg4\\exercises\\ex7.md";
         String neueMD = "C:\\Users\\G\\Desktop\\CT\\Praktikumsaufgaben\\Material-Aufg4\\exercises\\test2.md";
 
-        bedingungsBerechner.mcdc(exercize);
-        bedingungsBerechner.mdTabelleErstellen(neueMD, bedingungsBerechner.getErgebnisSet());
 
+        //bedingungsBerechner.mcdc(exercize);
+        bedingungsBerechner.mdTabelleErstellen(neueMD, bedingungsBerechner.mmbue(exercize));
     }
 
     private TabellenLeser leser = new TabellenLeser();
@@ -54,7 +64,7 @@ public class BedingungsBerechner {
     public Set<List<String>> mmbue(String file) throws FileNotFoundException {
 
         List<List<String>> werteListe = leser.leseTabelle(file);
-
+        Set<List<String>> ergebnisSet = new HashSet<>();
 
         int werteListeSize = werteListe.size();
         int werteListeZeileSize = werteListe.get(0).size();
@@ -73,10 +83,10 @@ public class BedingungsBerechner {
         return ergebnisSet;
     }
 
-    public void mcdc(String file) throws FileNotFoundException {
+    public Set<List<String>> mcdc(String file) throws FileNotFoundException {
 
         List<List<String>> werteTabelle = leser.leseTabelle(file);
-        Set<List<String>> ergebnisSet = new HashSet<>();
+        //Set<List<String>> ergebnisSet = new HashSet<>();
 
         int werteTabelle_size = werteTabelle.size();
         int werteTabeleZeile_size = werteTabelle.get(0).size();
@@ -86,23 +96,24 @@ public class BedingungsBerechner {
             List<List<String>> nachbarn = getNachbarn(werteTabelle.get(zeile), werteTabelle);
 
 
-            for (List<String> strings : nachbarn) {
-                if (!werteTabelle.get(zeile).get(werteTabeleZeile_size - 1).equals(strings.get(werteTabeleZeile_size - 1))) {
-                    ergebnisSet.add(strings);
+            for (List<String> nachbar : nachbarn) {
+                if (!werteTabelle.get(zeile).get(werteTabeleZeile_size - 1).equals(nachbar.get(werteTabeleZeile_size - 1))) {
+                    ergebnisSet.add(nachbar);
                 }
             }
         }
         System.out.println(ergebnisSet);
+        return ergebnisSet;
     }
 
-    public void mdTabelleErstellen(String filePath, Set<List<String>> tableData) {
-        try (FileWriter writer = new FileWriter(filePath)) {
+    public void mdTabelleErstellen(String dateiPfad, Set<List<String>> ergebnisTabelle) {
+        try (FileWriter writer = new FileWriter(dateiPfad)) {
             writer.write("| A | B | C | Ergebnis |\n");
-            writer.write("| -------- | -------- | -------- | -------- |\n");
+            writer.write("| --- | --- | --- | --- |\n");
 
 
-            for (List<String> rowData : tableData) {
-                writer.write("| " + rowData.get(0) + " | " + rowData.get(1) + " | " + rowData.get(2) + " | " + rowData.get(3) + " |\n");
+            for (List<String> zeileData : ergebnisTabelle) {
+                writer.write("| " + zeileData.get(0) + " | " + zeileData.get(1) + " | " + zeileData.get(2) + " | " + zeileData.get(3) + " |\n");
             }
 
             System.out.println("Markdowntabelle generiert");
